@@ -22,10 +22,9 @@ cube = Object("Cube")
 cube.add_component(Transform((0,0,-0.1)))
 cube.add_component(Cube(GL_POLYGON, "./texture.png")) #ToDo - change to Vars, pathlib
 glEnable(GL_LIGHTING)
-# glLight(GL_LIGHT0, GL_POSITION, (5,5,5,1))
-# glLightfv (GL_LIGHT0, GL_DIFFUSE, (1, 1, 1, 1))
-# glEnable(GL_LIGHT0)
-# glMaterialfv(GL_FRONT, GL_DIFFUSE, (0,1,0,1))
+clock = pygame.time.Clock()
+fps = 60
+
 while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -34,4 +33,6 @@ while not done:
     cube.update()
     glRotatef(0.01, 0.11, 0, 0.1)
     pygame.display.flip()
+    clock.tick(fps)
+    print( 'tick={}, fps={}'.format(clock.tick(), clock.get_fps()))
 pygame.quit()
