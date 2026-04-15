@@ -11,6 +11,7 @@ class Button:
         self.normal_color = color
         self.over_color = o_color
         self.pressed_color = p_color
+        self.mouse_down = False
 
     def draw(self, events):
         mouse_pos = pygame.mouse.get_pos()
@@ -22,11 +23,25 @@ class Button:
               self.normal_color[1]/255,
               self.normal_color[2]/255)
         # Check is mouse over
-        if self.position [0] < mx < (self.position [0] + self.width) and \
-           self.position [1] < my < (self.position [1] + self.height):
-            glColor3f(self.over_color[0], self.over_color [1], self.over_color [2])
+        is_over = self.position [0] < mx < (self.position [0] + self.width) and \
+           self.position [1] < my < (self.position [1] + self.height)
+        
+        if is_over:
+            for event in events:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    self.mouse_down = True
+                if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                   self.mouse_down = False
         else:
-            glColor3f(self.normal_color [0], self.normal_color [1], self.normal_color[2])
+            self.mouse_down = False   
+        if is_over:
+            if self.mouse_down:
+                color = self.pressed_color
+            else:
+                color = self.over_color
+        else:
+            color = self.normal_color   
+        glColor3f(color[0]/255, color[1]/255, color[2]/255)
         glBegin (GL_POLYGON)
         glVertex2f(self.position[0], self.position[1])
         glVertex2f(self.position[0] + self.width, self.position[1])
