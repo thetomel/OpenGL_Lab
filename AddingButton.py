@@ -4,10 +4,11 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from Button import *
+import Settings
 
 pygame.init()
-screen_width = 800
-screen_height = 600
+screen_width = Settings.SCREEN_WIDTH
+screen_height = Settings.SCREEN_HEIGHT
 pygame.display.set_caption('OpenGL in Python')
 screen = pygame.display.set_mode((screen_width,
                                   screen_height),
@@ -18,7 +19,8 @@ green = (0,255,0)
 blue = (0,0,255)
 objects_3d = []
 objects_2d = []
-
+def button_click():
+    print("Hello Button")
 def set_2d():
     glDisable(GL_DEPTH_TEST)
     glDisable(GL_TEXTURE_2D)
@@ -48,7 +50,7 @@ fps = 600
 
 
 button1 = Object("Button")
-button1.add_component(Button(screen, (0,0), 100,50, white, green, blue))
+button1.add_component(Button(screen, (0,0), 100,50, white, green, blue, button_click))
 objects_2d.append(button1)
 
 while not done:

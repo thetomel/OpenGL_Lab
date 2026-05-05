@@ -1,11 +1,13 @@
 from OpenGL.GL import *
 import pygame
 from Utils import *
+import Settings
 
 class Button:
-    def __init__(self, screen, position, width, height, color, o_color, p_color):
+    def __init__(self, screen, position, width, height, color, o_color, p_color, on_click):
         self.screen = screen
         self.position = position
+        self.on_click = on_click
         self.width = width
         self.height = height
         self.normal_color = color
@@ -15,8 +17,8 @@ class Button:
 
     def draw(self, events):
         mouse_pos = pygame.mouse.get_pos()
-        mx = map_value (0, 800, 0, 1600, mouse_pos[0])
-        my = map_value (0, 600, 1200, 0, mouse_pos[1])
+        mx = map_value (0, Settings.SCREEN_WIDTH, 0, Settings.SCREEN_WIDTH, mouse_pos[0])
+        my = map_value (0, Settings.SCREEN_HEIGHT, Settings.SCREEN_HEIGHT, 0, mouse_pos[1])
         glPushMatrix(),
         glLoadIdentity(),
         glColor3f(self.normal_color[0]/255,
@@ -30,6 +32,7 @@ class Button:
             for event in events:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mouse_down = True
+                    self.on_click()
                 if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                    self.mouse_down = False
         else:
