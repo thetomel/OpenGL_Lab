@@ -14,6 +14,7 @@ class Button:
         self.over_color = o_color
         self.pressed_color = p_color
         self.mouse_down = False
+        self.mouse_down = False
 
     def draw(self, events):
         mouse_pos = pygame.mouse.get_pos()
@@ -43,6 +44,8 @@ class Button:
             else:
                 color = self.over_color
         else:
+            color = self.normal_color   
+        glColor3f(color[0]/255, color[1]/255, color[2]/255)
             color = self.normal_color   
         glColor3f(color[0]/255, color[1]/255, color[2]/255)
         glBegin (GL_POLYGON)
