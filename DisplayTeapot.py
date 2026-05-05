@@ -1,10 +1,13 @@
 from Object import *
 from Cube import *
+import math
+import pygame.mouse
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from Button import *
 import Settings
+from LoadMesh import *
 
 pygame.init()
 screen_width = Settings.SCREEN_WIDTH
@@ -42,7 +45,7 @@ def set_3d():
 
 cube = Object("Cube")
 cube.add_component(Transform((0, 0, -5)))
-cube.add_component(Cube(GL_POLYGON, "./texture.png")) #ToDo - change to Vars, pathlib
+cube.add_component(LoadMesh(GL_LINE_LOOP, "models/teapot.obj"))
 objects_3d.append(cube)
 
 clock = pygame.time.Clock()
