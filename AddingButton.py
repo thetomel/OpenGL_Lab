@@ -46,18 +46,29 @@ cube.add_component(Cube(GL_POLYGON, "./texture.png")) #ToDo - change to Vars, pa
 objects_3d.append(cube)
 
 clock = pygame.time.Clock()
-fps = 600
+fps = 60
 
 
 button1 = Object("Button")
 button1.add_component(Button(screen, (0,0), 100,50, white, green, blue, button_click))
 objects_2d.append(button1)
 
+trans: Transform = cube.get_component(Transform)
 while not done:
     events = pygame.event.get()
     for event in events:
         if event.type == pygame.QUIT:
             done = True
+    keys = pygame.key.get_pressed()
+    if keys [pygame.K_LEFT]:
+        trans.move_X(-0.1)
+    if keys [pygame.K_RIGHT]:
+        trans.move_X(0.1)   
+    if keys [pygame.K_UP]:
+        trans.move_Y(0.1)   
+    if keys [pygame.K_DOWN]:
+        trans.move_Y(-0.1)  
+        
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     set_3d()
     for o in objects_3d:

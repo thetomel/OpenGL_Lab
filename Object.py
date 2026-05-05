@@ -23,3 +23,8 @@ class Object:
             if isinstance (c, Mesh3D):
                 c.draw()
         glPopMatrix()
+    def get_component(self, class_type):
+        for c in self.components:
+            if type (c) is class_type:
+                return c
+        return None
