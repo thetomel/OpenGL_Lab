@@ -48,6 +48,8 @@ class Button:
         glColor3f(color[0]/255, color[1]/255, color[2]/255)
         color = self.normal_color   
         glColor3f(color[0]/255, color[1]/255, color[2]/255)
+        color = self.normal_color   
+        glColor3f(color[0]/255, color[1]/255, color[2]/255)
         glBegin (GL_POLYGON)
         glVertex2f(self.position[0], self.position[1])
         glVertex2f(self.position[0] + self.width, self.position[1])
