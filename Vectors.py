@@ -1,13 +1,11 @@
 from Object import *
 from Cube import *
-import math
-import pygame.mouse
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from Button import *
+from Grid import *
 import Settings
-from LoadMesh import *
 
 pygame.init()
 screen_width = Settings.SCREEN_WIDTH
@@ -17,9 +15,6 @@ screen = pygame.display.set_mode((screen_width,
                                   screen_height),
                                  DOUBLEBUF | OPENGL)
 done = False
-white = pygame.Color(255, 255, 255)
-green = (0,255,0)
-blue = (0,0,255)
 objects_3d = []
 objects_2d = []
 def button_click():
@@ -45,18 +40,26 @@ def set_3d():
 
 cube = Object("Cube")
 cube.add_component(Transform((0, 0, -5)))
-cube.add_component(LoadMesh(GL_LINE_LOOP, "models/teapot.obj"))
+cube.add_component(Cube(GL_POLYGON, "./texture.png")) #ToDo - change to Vars, pathlib
 objects_3d.append(cube)
 
+
+cube2 = Object("Cube")
+cube2.add_component (Transform((0, 1, -5)))
+cube2.add_component (Cube (GL_POLYGON,
+    "./texture2.png"))
+
+objects_3d.append(cube)
+objects_3d.append(cube2)
+grid = Object("Grid")
+grid.add_component(Transform((0,0,-5)))
+grid.add_component(Grid(0.5, 8, (0,0,255)))
+objects_3d.append(grid) 
 clock = pygame.time.Clock()
-fps = 60
-
-
-button1 = Object("Button")
-button1.add_component(Button(screen, (0,0), 100,50, white, green, blue, button_click))
-objects_2d.append(button1)
+fps = 10
 
 trans: Transform = cube.get_component(Transform)
+trans2: Transform = cube2.get_component(Transform)
 while not done:
     events = pygame.event.get()
     for event in events:
@@ -70,8 +73,11 @@ while not done:
     if keys [pygame.K_UP]:
         trans.move_Y(0.1)   
     if keys [pygame.K_DOWN]:
-        trans.move_Y(-0.1)  
-        
+        trans.move_Y(-0.1)
+    if keys [pygame.K_SPACE]:
+        trans.move(pygame.Vector3(1,1,0))
+        trans2.move(pygame.Vector3(1,1,0) *-2)
+        #Obliczanie długości (magnitude) wektora#
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     set_3d()
     for o in objects_3d:

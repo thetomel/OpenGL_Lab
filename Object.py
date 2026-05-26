@@ -1,6 +1,7 @@
 from Mesh3D import *
 from Transform import *
 from Button import *
+from Grid import *
 
 class Object:
     def __init__ (self, obj_name):
@@ -21,6 +22,8 @@ class Object:
             if isinstance (c, Button):
                 c.draw(events)
             if isinstance (c, Mesh3D):
+                c.draw()
+            if isinstance (c, Grid):
                 c.draw()
         glPopMatrix()
     def get_component(self, class_type):
